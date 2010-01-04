@@ -1,0 +1,18 @@
+body { background:#FFFFFF; font-family: Verdana, Arial, Helvetica, sans-serif; }
+h4 { font-size: 15px; font-weight: bold; }  
+td, ul, p, th { text-align: center; font-size: 13px; }  
+a { text-decoration: none; color: #0000A0; }
+table { width: 100%; }
+.teamposition { background-color: #00AFDF; color: #000000; font-weight: bold; }
+.teamname { padding: 8px; text-align: left; }
+.headerrow { background-color: #00AFDF; color: #000000; }
+.headerrow a, .headerrow a:active { color: #000000; }
+.headerrow a:hover { color: #FFFFFF; }
+.problemrow { background-color: #85D5EE; }
+.header { text-align: center; padding: 8px; background: #00AFDF; }
+.header h1 { color: #000000; margin-bottom: 0px; }
+.footer { border-bottom: solid 1px #6060A0; }
+.table { background-color: #8FDFFF; }
+.info { background-color: #FFFFFF; }
+.ac { color: green; font-weight: bold; }
+.error { color: red; font-weight: bold; }

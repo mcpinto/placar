@@ -1,0 +1,93 @@
+
+REQUERIMENTOS
+
+	- Sistema operacional linux ou cygwin no windows
+	- wget 
+	- make
+	- gcc/g++
+
+INSTALAÇÂO
+
+	- Basta exutar o comando make:
+		$ make
+
+COMO USAR
+
+	- Primeiramente você precisa escolher que juiz online você vai usar para realizar
+	o contest, esta versão do placar gerencia contests dos seguinte juizes:
+		1. ACM ICPC LIVE ARCHIVE (http://acmicpc-live-archive.uva.es/nuevoportal/)
+		2. PKU JudgeOnline (http://acm.pku.edu.cn/JudgeOnline/)
+		3. Sphere Online Judge (http://www.spoj.pl/)
+		4. Timus Online Judge - Univ. Ural (http://acm.timus.ru/)
+		5. UVa Online Judge (http://uva.onlinejudge.org)
+
+		Para setar o juiz vc precisa editar o script run e setar a variavél $STATUS_PATH para:
+			STATUS_PATH="status/archive" # se você deseja usar o Live Archive
+			STATUS_PATH="status/pku" # se você deseja usar o Peking judge
+			STATUS_PATH="status/spoj" # se você deseja usar o Sphere judge
+			STATUS_PATH="status/ural" # se você deseja usar o Timus judge
+			STATUS_PATH="status/uva" # se você deseja usar o Valladolid judge
+
+		O padrão setado no arquivo é o PKU.
+	
+	- Escolhido o juiz online usado você precisa editar 4 arquivos:
+		
+		1. Arquivo config/contest.info
+			- Na primeira linha você deve colocar o nome do contest.
+			- Na segunda linha você deve colocar o data de início do contest.
+			- Na terceira linha você deve colocar o data de termino do contest.
+
+			OBS: a data deve ser colocada do formato "YY-MM-DD hh:mm:ss", YY o ano, 
+			MM o més de 1..12, DD o dia de 1..X(X depende do més), hh a hora de 00..23,
+			mm o minuto de 00..59 e ss o segundo de 00..59.
+
+		2. Arquivo config/problems.info
+			- Na primeira linha você deve colocar o identificador da primeira
+			questão.
+			- Na segunda linha você deve colocar a url da primeira questão.
+			- A terceira e quarta linhas devem ser escritas de forma indêntica
+			para a segunda questão, quinta e sexta linha para terceira questão
+			 e assim sucessivamente.
+
+			OBS: O identificador deve ser o número da questão em todos os juízes
+			excluindo o spoj, neste caso o indentificador deve ser o "Problem code"
+			que é dado logo abaixo do nome do problema na descrição do mesmo.
+
+		3. Arquivo config/users.info
+			- Na primeira linha deve ser colocado o ID do primeiro usuário.
+			- Na segunda linha deve ser colocado o Nome de exibição do primeiro usuário.
+			- Em seguida os outros usuários de forma análoga, primeiro em uma linha o ID
+			e em seguida seu nome de exibição.
+
+			OBS: Para os juízes archive e ural, o ID de cada usuário deve 
+			ser colocado SEM os digítos de verificação(as duas letrinhas do final). Para o spoj 
+			e pku deve ser colocado o username. Para o UVa deve ser colocado o userid interno. Para 
+			saber qual é esse userid de um determinado usuário, faça uma submissão com a conta dele, 
+			e nas estatísticas do site, nas 50 últimas submissões, coloque o mouse sobre o nome do 
+			usário, na statusbar do browser aparece o link que é apontado, ao final desse link você 
+			tem http://...userid=xxxxx, onde xxxxx será o userid do úsuário.
+
+		4. Arquivo config/teams.info
+			- Nesse arquivo você pode colocar equipes dos usuários cadastrados
+			em users.info.
+			- Na primeira linha deve ser colocado os IDs dos usuários da
+			primeira equipe separados por 1 espaço.
+			- Na segunda linha deve ser colocado o Nome de exibição da primeira
+			equipe.
+			- Em seguida as outras equipes de forma análoga, primeiro em uma
+			linha os IDs e em seguida seu nome de exibição.
+			- uma equipe pode ter qualquer número de usuários.
+
+	- Feito isto, o placar está pronto para ser usado, basta você rodar o script run:
+
+		$ ./run
+
+	* Vai ser gerado um arquivo contest.html, que vai ser o scoreboard do contest. O scritp fica rodando
+	em loop, atualizando o placar a cada 15 segundos. Quando o hora de termino for atingida ele terminará
+	automaticamente sua execução.
+
+	* Para cada arquivo X que se precisa configurar, existe um X.sample explicando a configuração.
+	* Existe um contest.html exemplo para mostrar o scoreboard que o placar gera.
+
+
+	*** Qualquer dúvida entre em contato pelo email: joeluchoa@gmail.com

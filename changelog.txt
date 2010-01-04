@@ -1,0 +1,57 @@
+version 0.9.8
+2009/08/14
+	- consertado bug no status do PKU, agora pega a primeira submissão
+	da página.
+	- UVA novo funcionando agora.
+	- adicionada mais uma funcionalidade, agora é possível inscrever 
+	equipes, formadas por usuários inscritos, o desempenho da equipe é 
+	a soma dos desempenhos de seus membros.
+	- Refactoring em todos os status (archive,pku,uva,spoj,ural), todos
+	para C++ e todos funcionando.
+	- Refactoring em todos os arquivos C para C++.
+	- Melhorado o view e adicionado os style.css, um para UVA e um para o
+	SPOJ.
+	- Feito algumas correções para voltar a distribuir o placar.
+
+version 0.9.7:
+2007/09/06
+	- O contest.html gerado agora se auto atualiza a cada 15s. (Agradecimentos
+	a Carlos Stein)
+	- Consertado um bug no fuso horário do spoj. (Agradecimentos a Wanderley
+	Guimarães)
+	- Constantes que definiam o número máximo de usuários, problemas e
+	submissões. Alterado também o tamanho dos atributos de um problema. (Agradecimentos
+	a Wanderley Guimarães)
+	- Adiccionada uma pergunta antes de apagar as submissões ao iniciar um
+	contest. (Agradecimentos a Wanderley Guimarães)
+	- O título do contest.html agora é o nome do contest. (Agradecimentos a Rafael
+	Martinelli)
+
+
+version 0.9.6:
+2007/08/30
+	- Os arquivos de logs, inclusive as submissões do contest
+	passado são removidos automaticamente antes de começar um
+	novo contest. (Agradecimentos a Carlos Stein)
+	- Depois que a hora de termino do contest passa, o script
+	roda 5 vezes para assegurar que submissões perto do final
+	do contest foram "vistas". (Agradecimentos a Rafael Martinelli)
+	- O placar, que antes só funcionava para gerenciar contest que
+	começassem e terminassem no mesmo dia, agora funcina para 
+	contest que começam e terminam em "qualquer" data. (Agradecimentos 
+	a Rafael Martinelli)
+
+version 0.9.5:
+2007/08/29
+	- Para setar o juiz usado precisa-se editar o script run
+	em vez de passar por parâmetro, o mesmo foi alterado para
+	o view.
+	- Adicionado o arquivo README.
+
+version 0.9.4:
+2007/08/28
+	- Inserção de printfs no script run
+	- Consertado o bug timeformat.c quando a hora passava de meio dia.
+	- Adicionada a ordenação por ordem alfabetica de nome de exibição quando
+	ocorre um empate total.
+	- Criação do arquivo changelog.txt.

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+STATUS_PATH="http://acm.pku.edu.cn/JudgeOnline/status"
+
+wget -q -O statuspage $STATUS_PATH
+cat statuspage | # Pega o html 
+	sed -e 's/<td><\/td>/<td>0<\/td>/g' |
+	sed -e '24,26d' -e '1,2d' | # Deleta as linhas 1 a 30 e 64 a 78
+	sed -e 's/&nbsp;//g' | # Retira os espacos do html
+	sed -e 's/<[^>]*>/\n/g' | # Retira todas tags e quebra
+	sed -e '/^[ \t]*$/d' | # Retira as linhas vazias
+	sed -e 's/^[ \t]*//' | # Retira os espacos no comeco de todas as linhas
+	sed -e 's/[ \t]*$//' > tmp # Retira os espacos no final de todas as linhas
+
+cat tmp |
+	sed -n "/.*-.*-[0-9]* .*:.*:[0-9]*/p" |
+		while read LINE;
+		do
+			AUX="s/$LINE/`date -d "$LINE" +%s`/g"
+			#echo "> $AUX"
+			sed -e "$AUX" tmp > tmp2
+			cat tmp2 > tmp
+		done
+
+cat tmp
+
+rm statuspage tmp tmp2

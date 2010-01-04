@@ -1,0 +1,31 @@
+#!/bin/bash
+
+STATUS_PATH="http://acm.timus.ru/status.aspx?space=1&count=30"
+
+wget -q -O statuspage $STATUS_PATH
+cat statuspage | # Pega o html 
+	sed -e 's/^.\{1,2696\}//' |
+	sed -e 's/&nbsp;//g' | # Retira os espacos do html
+	sed -e 's/<TD class="id">/\n/g' | # quebra linha no comeco de cada submissao
+	sed -e '/<A HREF="author.aspx?id=/{s/">/\n/3}' | # Retira o id do autor da tag
+	sed -e 's/<A HREF="author.aspx?id=/\n/g' | # cont. Retira o id do autor da tag
+	sed -e 's/<BR>/ /g' |
+	sed -e 's/<[^>]*>/\n/g' | # Retira todas tags e quebra
+	sed -e '/^[ \t]*$/d' | # Retira as linhas vazias
+	sed -e 's/^[ \t]*//' | # Retira os espacos no comeco de todas as linhas
+	sed -e 's/[ \t]*$//' | # Retira os espacos no final de todas as linhas
+	sed -e '{:loop $d; N; 2,17b loop; P; D;}' > tmp # deleta ultimas 16 linhas do arquivo 
+
+cat tmp |
+	sed -n "/.*:.*:[0-9]* .*/p" |
+	while read LINE;
+	do
+		AUX="s/$LINE/`date -d "$LINE" +%s`/g"
+		#echo "> $AUX"
+		sed -e "$AUX" tmp > tmp2
+		cat tmp2 > tmp
+	done
+
+cat tmp
+
+rm statuspage tmp tmp2

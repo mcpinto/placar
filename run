@@ -1,0 +1,98 @@
+#!/bin/bash
+
+# Para usar o placar para gerenciar um contest que nao seja do uva
+# troque a variavel STATUS_PATH que indica a pasta "status/uva" para o respectivo
+# online judge que se deseja usar: (lembre-se de deixar apenas um descomentada)
+#STATUS_PATH="status/archive" # para usar o archive
+#STATUS_PATH="status/pku" # para usar o pku online judge
+#STATUS_PATH="status/spoj" # para usar spoj online judge
+#STATUS_PATH="status/ural" # para usar ural online judge
+STATUS_PATH="status/uva" # para usar o UVa online judge
+
+
+VIEW_PATH="view"
+FILE_OUT="./contest.html"
+
+END_TIME=`sed -e '1,2d' -e '1q' config/contest.info`
+END_TIME=`date -d "$END_TIME" +%s`
+TOLERANCIA=5
+
+#TODO
+# - testar
+# - lembrar do que mais falta fazer =)
+
+printf "Você deseja apagar o log das submissões?(s/N)"
+
+read R;
+if [ "$R" == "S" ] | [ "$R" == "s" ];
+then
+	printf "Atenção: você perderá todas as submissões anteriormente guardadas.\nDeseja continuar?(s/N)"
+	read R
+	if [ "$R" == "S" ] | [ "$R" == "s" ];
+	then
+		make -C log/ clean # limpa os logs do contest passado
+	fi
+fi
+
+
+while (true) do
+	printf "\n\n[` date --rfc-3339=seconds | sed 's/.* //;s/-.*//'`] UPDATE SCROREBOARD...\n\n\n"
+
+	printf "Getting status of the $STATUS_PATH..."
+	./$STATUS_PATH/status | ./$STATUS_PATH/format >> ./log/submitions.log
+	printf "\tDONE!\n\n"
+	printf "Fomating submitions... new_submitions >> log/submitions.log"
+	printf "\tDONE!\n\n"
+
+	printf "Entering directory \"generator\"...\n\n"
+	cd generator
+
+		printf "\tFiltering valid submitions...\tDONE!\n"
+		./filter
+		printf "\tGeting time now...\t\tDONE!\n"
+		./timenow > ../log/now.log
+		printf "\tGenerate scoreboard...\t\tDONE!\n"
+		./generator
+		printf "\tupdating contest.log...\t\tDONE!\n"
+
+	cd ..
+	printf "\nLeaving directory \"generator\"...\n\n"
+
+	printf "Entering directory \"$VIEW_PATH\"...\n\n"
+	cd $VIEW_PATH
+	./view
+	printf "\tupdating contest.html...\tDONE!\n"
+	cd ..
+	printf "\nLeaving directory \"$VIEW_PATH\"...\n\n"
+
+
+	printf "\nUPDATE SCROREBOARD... DONE!\n\n"
+
+	NOW=`sed -e '1q' log/now.log`
+	NOW=`date -d "$NOW" +%s`
+
+	./generator/finish $NOW $END_TIME #termina com codigo 1 se contest terminou, 0 se contrario
+
+	if [ $? == "1" ]; # termina automaticamente
+	then
+		if [ $TOLERANCIA -eq 0 ];
+		then
+			printf "\n\n<<<<< CONTEST FINISH >>>>>\n\n\n"
+			exit
+		fi
+
+		printf "\n\nContest finish - Placar stop in $TOLERANCIA iterations!!!\n\n"
+		TOLERANCIA=`expr $TOLERANCIA - 1`
+	fi
+
+
+	printf "\nSLEEPING."
+	I=0
+	while [ "$I" != "15" ];
+   	do
+		sleep 1
+		printf "."
+		I=`expr $I + 1`
+	done
+	printf "\n\n\n\n"
+done
