@@ -78,11 +78,13 @@ int seconds(char *t){
 }
 
 char *format(char *t, int sec){
-    int h,m,s;
+    /*int h,m,s;
     s = sec % 60;
     m = (sec / 60) % 60;
     h = sec / 3600;
-    sprintf(t, "%02d:%02d:%02d", h,m,s);
+    sprintf(t, "%02d:%02d:%02d", h,m,s);*/
+    int min = sec / 60;
+    sprintf(t, "%d", min);
     return t;
 }
 
@@ -248,16 +250,16 @@ void writeRank(FILE* p, char *nome, int started, vector<User>& elems) {
 
             if (elems[i].penalty[j] > 0) { // pelalidade
                 format(aux,elems[i].penalty[j]);
-                fprintf(p, "<font class=ac>%s</font>", aux);
+                fprintf(p, "<font class=ac>%s</font> ", aux);
             } else {
-                fprintf(p, "00:00:00");
+                fprintf(p, "0 ");
             }
 
 
             if ( elems[i].errors[j] > 0 ) {
-                fprintf(p, "<br/>(<font class=error>%d</font>)", elems[i].errors[j]); /* erros */
+                fprintf(p, "(<font class=error>%d</font>)", elems[i].errors[j]); /* erros */
             } else {
-                fprintf(p, "<br/>(0)");
+                fprintf(p, "(0)");
             }
 
             fprintf(p, "</td>\n");
