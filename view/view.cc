@@ -279,11 +279,15 @@ void writeTable(FILE *p) {
     fprintf(p, "<p></p>\n");
     fprintf(p, "<table class=table abgcolor=\"#8FDFFF\" >\n");
 
-    writeRank(p, "Teams", started, teams);
+    if (true) {
+	    writeRank(p, "Teams", started, teams);
+    }
 
     fprintf(p, "<tr><td><br/></td></tr>\n");
 
-    writeRank(p, "Users", started, users);
+    if (true) {
+    	writeRank(p, "Users", started, users);
+    }
 
     fprintf (p, "</table>\n</center>\n");
 }
